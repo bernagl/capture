@@ -1,5 +1,13 @@
 import { StackNavigator, TabBarBottom, TabNavigator } from 'react-navigation'
-import { Calendario, Inicio, Login, Materia, Tarea, Perfil } from '../views'
+import {
+  Calendario,
+  FMateria,
+  Inicio,
+  Login,
+  Materia,
+  Tarea,
+  Perfil
+} from '../views'
 
 export default StackNavigator({
   Aplicacion: {
@@ -11,7 +19,8 @@ export default StackNavigator({
     })
   },
   Login: { screen: Login },
-  Materia: { screen: Materia }
+  Materia: { screen: Materia },
+  AgregarMateria: { screen: FMateria }
   //   Horario: { screen: Horario },
   //   Calendario: { screen: Calendario },
   //   Perfil: { screen: Perfil }

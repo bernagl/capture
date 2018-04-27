@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { Dias } from '../data'
-import { Materia, View } from '../components'
+import { FAB, Materia, View } from '../components'
 import ViewWrapper from '../components/View'
 import { hideHeader, showHeader } from '../actions'
 
@@ -17,8 +17,8 @@ class Inicio extends Component {
     const { materias } = this.props
     materias.sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
     return (
-      <ScrollView style={styles.main}>
-        <View>
+      <View>
+        <ScrollView style={styles.main}>
           {materias.map((materia, key) => (
             <Materia
               key={key}
@@ -26,8 +26,9 @@ class Inicio extends Component {
               navigate={this.props.navigation.navigate}
             />
           ))}
-        </View>
-      </ScrollView>
+        </ScrollView>
+        <FAB navigate={this.props.navigation.navigate} />
+      </View>
     )
   }
 }
