@@ -4,7 +4,8 @@ import { View } from '../components'
 
 export default class Tarea extends Component {
   static navigationOptions = {
-    title: 'Tarea'
+    title: 'Tarea',
+    header: null    
   }
 
   render() {

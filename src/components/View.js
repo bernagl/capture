@@ -5,7 +5,7 @@ export default ({ children, center }) => {
   const style = {
     backgroundColor: 'white',
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     justifyContent: center && 'center',
     alignItems: center && 'center'
   }

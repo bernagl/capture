@@ -4,7 +4,8 @@ import { View } from '../components'
 
 export default class Perfil extends Component {
   static navigationOptions = {
-    title: 'Perfil'
+    title: 'Perfil',
+    header: null
   }
 
   render() {

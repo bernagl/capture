@@ -15,11 +15,11 @@ class Inicio extends Component {
 
   render() {
     const { materias } = this.props
-    materias.sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
+    materias[3].sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
     return (
       <View>
         <ScrollView style={styles.main}>
-          {materias.map((materia, key) => (
+          {materias[3].map((materia, key) => (
             <Materia
               key={key}
               materia={materia}

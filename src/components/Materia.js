@@ -11,18 +11,18 @@ export default class Materia extends Component {
       edificio,
       inicio,
       fin,
-      maestro,
-      nombre,
-      salon
+      profesor,
+      materia,
+      aula
     } = this.props.materia
     return (
       <TouchableOpacity
-        onPress={() => this.props.navigate('Materia', { nombre })}
+        onPress={() => this.props.navigate('Materia', { materia })}
       >
         <Card containerStyle={{ marginVertical: 5 }} height={120}>
           <Card.Section body margin-0 padding-10>
             <Text text30 orange50>
-              {nombre}
+              {materia}
             </Text>
             <View row>
               <View column>
@@ -33,7 +33,7 @@ export default class Materia extends Component {
               <Text
                 text80
                 dark40
-              >{`Aula: ${salon}  Profesor: ${maestro}`}</Text>
+              >{`Aula: ${aula}  Profesor: ${profesor}`}</Text>
             </View>
             <TouchableOpacity
               onPress={() => this.setState({ options: !this.state.options })}

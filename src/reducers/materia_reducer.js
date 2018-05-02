@@ -1,61 +1,25 @@
-export default function(state = null, action) {
-  switch (action.type) {
+import { AGREGAR } from '../types'
+
+const INITIAL_STATE = {
+  1: [],
+  2: [],
+  3: [],
+  4: [],
+  5: [],
+  6: [],
+  0: []
+}
+export default function(state = INITIAL_STATE, { payload, type }) {
+  switch (type) {
+    case AGREGAR:
+      const { color, materia, profesor } = payload
+      payload.dias.map(item => {
+        let dia = state[item.dia]
+        dia = [...dia, { ...item, materia, profesor, color }]
+        state[item.dia] = dia
+      })
+      return { ...state }
     default:
-      return [
-        {
-          nombre: 'Álgebra',
-          color: 'red',
-          edificio: '1A',
-          inicio: '12:00',
-          fin: '13:00',
-          maestro: 'Luis García',
-          salon: '1201'
-        },
-        {
-          nombre: 'Álgebra',
-          color: 'red',
-          edificio: '1A',
-          inicio: '13:00',
-          fin: '14:00',
-          maestro: 'Luis García',
-          salon: '1201'
-        },
-        {
-          nombre: 'Álgebra',
-          color: 'red',
-          edificio: '1A',
-          inicio: '14:00',
-          fin: '15:00',
-          maestro: 'Luis García',
-          salon: '1201'
-        },
-        {
-          nombre: 'Álgebra',
-          color: 'red',
-          edificio: '1A',
-          inicio: '15:00',
-          fin: '16:00',
-          maestro: 'Luis García',
-          salon: '1201'
-        },
-        {
-          nombre: 'Álgebra',
-          color: 'red',
-          edificio: '1A',
-          inicio: '17:00',
-          fin: '18:00',
-          maestro: 'Luis García',
-          salon: '1201'
-        },
-        {
-          nombre: 'Álgebra',
-          color: 'red',
-          edificio: '1A',
-          inicio: '19:00',
-          fin: '20:00',
-          maestro: 'Luis García',
-          salon: '1201'
-        }
-      ]
+      return state
   }
 }

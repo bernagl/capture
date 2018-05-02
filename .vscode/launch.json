@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug iOS",
+      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "type": "reactnative",
+      "request": "launch",
+      "platform": "ios",
+      "sourceMaps": true,
+      "outDir": "${workspaceRoot}/.vscode/.react"
+    },
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8081/debugger-ui",
+      "webRoot": "${workspaceRoot}/"
+    }
+  ]
+}

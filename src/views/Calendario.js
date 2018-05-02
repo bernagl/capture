@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { FlatList, Switch, TouchableOpacity } from 'react-native'
+import {
+  CheckBox,
+  FlatList,
+  Switch,
+  TouchableOpacity,
+  Platform
+} from 'react-native'
 import { Divider, View } from '../components'
 import { Calendar } from 'react-native-calendars'
 import { ListItem, Text } from 'react-native-ui-lib'
@@ -9,26 +15,38 @@ import { toggleTarea } from '../actions/tarea_actions'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 class Calendario extends Component {
-  state = { selectedDay: '' }
+  state = { platform: '', selectedDay: '' }
   static navigationOptions = {
-    title: 'Calendario'
+    title: 'Calendario',
+    header: null
+  }
+
+  componentDidMount() {
+    this.setState({ platform: Platform.OS })
   }
 
   toggleTarea = tarea => {
     this.props.toggleTarea(tarea)
   }
 
-  renderItem({ item }) {
+  renderItem = (item, platform) => {
     return (
       <ListItem>
         <ListItem.Part>
-          <TouchableOpacity onPress={() => this.toggleTarea(item)}>
-            {item.status ? (
-              <Icon name="ios-checkmark-circle-outline" size={25} />
-            ) : (
-              <Icon name="ios-radio-button-off-outline" size={25} />
-            )}
-          </TouchableOpacity>
+          {platform === 'ios' ? (
+            <TouchableOpacity onPress={() => this.toggleTarea(item)}>
+              {item.status ? (
+                <Icon name="ios-checkmark-circle-outline" size={25} />
+              ) : (
+                <Icon name="ios-radio-button-off-outline" size={25} />
+              )}
+            </TouchableOpacity>
+          ) : (
+            <CheckBox
+              value={item.status}
+              onValueChange={() => this.toggleTarea(item)}
+            />
+          )}
         </ListItem.Part>
         <ListItem.Part>
           <Text dark20 style={styles.switch}>
@@ -41,7 +59,7 @@ class Calendario extends Component {
 
   render() {
     const { tareas } = this.props
-    const { selectedDay } = this.state
+    const { platform, selectedDay } = this.state
     const tareasDia = tareas.filter(tarea => tarea.fecha === selectedDay)
     return (
       <View>
@@ -58,7 +76,7 @@ class Calendario extends Component {
           {tareasDia.length > 0 ? (
             <FlatList
               data={tareasDia}
-              renderItem={item => this.renderItem(item)}
+              renderItem={({ item }) => this.renderItem(item, platform)}
             />
           ) : (
             <View center>
