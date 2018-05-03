@@ -9,7 +9,7 @@ class Materia extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state
     return {
-      title: params ? params.nombre : 'Materia'
+      title: params ? params.materia : 'Materia'
     }
   }
 
@@ -36,6 +36,7 @@ class Materia extends Component {
 
   render() {
     const { platform } = this.state
+    console.warn(this.props)
     return (
       <View>
         <FlatList

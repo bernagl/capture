@@ -8,7 +8,7 @@ import {
 import { FAB, View } from '../components'
 import { TextInput, View as V } from 'react-native'
 import { RkChoice, RkTextInput } from 'react-native-ui-kitten'
-import { ColorPicker } from 'react-native-color-picker'
+import { ColorPicker, fromHsv } from 'react-native-color-picker'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {
   CheckBox,
@@ -42,7 +42,8 @@ class FMateria extends Component {
         fin: '',
         checked: false,
         edificio: '',
-        aula: '', dia: 1
+        aula: '',
+        dia: 1
       },
       {
         label: 'Martes',
@@ -50,7 +51,8 @@ class FMateria extends Component {
         fin: '',
         checked: false,
         edificio: '',
-        aula: '', dia: 2
+        aula: '',
+        dia: 2
       },
       {
         label: 'Miércoles',
@@ -58,7 +60,8 @@ class FMateria extends Component {
         fin: '13:00',
         checked: true,
         edificio: '1',
-        aula: '1201', dia: 3
+        aula: '1201',
+        dia: 3
       },
       {
         label: 'Jueves',
@@ -66,7 +69,8 @@ class FMateria extends Component {
         fin: '',
         checked: false,
         edificio: '',
-        aula: '', dia: 4
+        aula: '',
+        dia: 4
       },
       {
         label: 'Viernes',
@@ -74,7 +78,8 @@ class FMateria extends Component {
         fin: '',
         checked: false,
         edificio: '',
-        aula: '', dia: 5
+        aula: '',
+        dia: 5
       },
       {
         label: 'Sábado',
@@ -82,7 +87,8 @@ class FMateria extends Component {
         fin: '',
         checked: false,
         edificio: '',
-        aula: '', dia: 6
+        aula: '',
+        dia: 6
       }
       // { dia: 'Domingo', inicio: '', fin: '', checked: false, edificio:'', aula: '', dia: 0 }
     ],
@@ -128,6 +134,7 @@ class FMateria extends Component {
     const { dias, materia, profesor, color } = this.state
     const objMateria = { color, dias, materia, profesor }
     this.props.agregarMateria(objMateria)
+    this.setState({ modal: false })
   }
 
   render() {
@@ -254,6 +261,7 @@ class FMateria extends Component {
           <Modal animationType="slide" transparent={false} visible={modalColor}>
             <ColorPicker
               onColorSelected={color => this.setState({ color })}
+              onColorChange={color => this.setState({ color: fromHsv(color) })}
               style={{ flex: 1 }}
             />
             <Button
