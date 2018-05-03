@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
-import { CheckBox, FlatList, Switch, Platform } from 'react-native'
+import { FlatList, Switch, Platform } from 'react-native'
 import { connect } from 'react-redux'
-import { View } from '../components'
-import { ListItem, Text } from 'react-native-ui-lib'
+import { toggleTarea } from '../actions/tarea_actions'
+import { TareaItem, View } from '../components'
+import {
+  Segment,
+  Button,
+  Fab,
+  Body,
+  Text,
+  ListItem,
+  CheckBox
+} from 'native-base'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 class Materia extends Component {
   state = { platform: '' }
@@ -14,35 +24,74 @@ class Materia extends Component {
   }
 
   componentDidMount() {
-    this.setState({ platfotm: Platform.OS })
+    this.setState({ platfotm: Platform.OS, tab: 'tarea' })
   }
 
-  renderRow({ item }, platform) {
-    return (
-      <ListItem>
-        <ListItem.Part>
-          {platform === 'android' ? (
-            <CheckBox value={item.status} />
-          ) : (
-            <Switch value={item.status} />
-          )}
-        </ListItem.Part>
-        <ListItem.Part>
-          <Text>{item.nombre}</Text>
-        </ListItem.Part>
-      </ListItem>
-    )
+  setActiveTab = tab => {
+    this.setState({ tab })
   }
+
+  // renderRow({ item }, platform) {
+  //   return (
+  //     <ListItem>
+  //       <CheckBox checked={item.status} onPress={this.toggleTarea(item)} />
+  //       <Body>
+  //         <Text>{item.tarea}</Text>
+  //       </Body>
+  //     </ListItem>
+  //   )
+  // }
 
   render() {
-    const { platform } = this.state
-    console.warn(this.props)
+    const { platform, tab } = this.state
+    const { materia, id } = this.props.navigation.state.params
     return (
-      <View>
-        <FlatList
-          data={this.props.tareas}
-          renderItem={row => this.renderRow(row, platform)}
-        />
+      <View noPadding>
+        <Segment style={{ backgroundColor: 'white' }}>
+          <Button
+            first
+            active={tab === 'tarea' ? true : false}
+            onPress={() => this.setActiveTab('tarea')}
+          >
+            <Text>Tareas</Text>
+          </Button>
+          <Button
+            last
+            active={tab === 'foto' ? true : false}
+            onPress={() => this.setActiveTab('foto')}
+          >
+            <Text>Fotos</Text>
+          </Button>
+        </Segment>
+        {tab === 'tarea' ? (
+          <FlatList
+            data={this.props.tareas}
+            renderItem={row => (
+              <TareaItem
+                tarea={row.item}
+                toggleTarea={this.props.toggleTarea}
+              />
+            )}
+          />
+        ) : (
+          <View>
+            <Text>Fotos</Text>
+          </View>
+        )}
+        <Fab
+          style={{ backgroundColor: '#5067FF' }}
+          onPress={() =>
+            this.props.navigation.navigate('AgregarTarea', { id, materia })
+          }
+          position="bottomRight"
+        >
+          <Icon
+            active
+            name="ios-add-circle-outline"
+            size={25}
+            style={{ color: 'white' }}
+          />
+        </Fab>
       </View>
     )
   }
@@ -50,4 +99,4 @@ class Materia extends Component {
 
 const mapDisapatchToProps = ({ tareas }) => ({ tareas })
 
-export default connect(mapDisapatchToProps)(Materia)
+export default connect(mapDisapatchToProps, { toggleTarea })(Materia)

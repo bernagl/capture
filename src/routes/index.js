@@ -1,5 +1,6 @@
 import { StackNavigator, TabBarBottom, TabNavigator } from 'react-navigation'
 import {
+  AgregarTarea,
   Calendario,
   FMateria,
   Inicio,
@@ -20,7 +21,8 @@ export default StackNavigator({
   },
   Login: { screen: Login },
   Materia: { screen: Materia },
-  AgregarMateria: { screen: FMateria }
+  AgregarMateria: { screen: FMateria },
+  AgregarTarea: { screen: AgregarTarea }
   //   Horario: { screen: Horario },
   //   Calendario: { screen: Calendario },
   //   Perfil: { screen: Perfil }

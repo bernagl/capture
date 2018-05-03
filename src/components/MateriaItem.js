@@ -20,7 +20,8 @@ export default ({
   profesor,
   materia,
   navigate,
-  aula
+  aula,
+  id
 }) => {
   return (
     <Grid
@@ -28,7 +29,7 @@ export default ({
       // onPress={() => navigate('Materia', { materia })}
     >
       <Row>
-        <TouchableOpacity onPress={() => navigate('Materia', { materia })}>
+        <TouchableOpacity onPress={() => navigate('Materia', { materia, id })}>
           <H3 style={{ color }}>{materia}</H3>
         </TouchableOpacity>
       </Row>

@@ -39,7 +39,8 @@ class Inicio extends Component {
 
   render() {
     const { materias } = this.props
-    console.warn(diaNumero)
+    console.log(diaNumero, '-------------')
+    console.log(materias[diaNumero])
     materias[diaNumero].sort(
       (a, b) => (a.inicio > b.inicio ? 1 : a.inicio < b.inicio ? -1 : 0)
     )
@@ -54,7 +55,7 @@ class Inicio extends Component {
             />
           ))} */}
 
-          {materias[3].map((materia, key) => (
+          {materias[diaNumero].map((materia, key) => (
             <SwipeRow
               style={{ backgroundColor: 'white' }}
               leftOpenValue={75}
@@ -69,7 +70,12 @@ class Inicio extends Component {
                   />
                 </Button>
               }
-              body={<MateriaItem {...materia} navigate={this.props.navigation.navigate} />}
+              body={
+                <MateriaItem
+                  {...materia}
+                  navigate={this.props.navigation.navigate}
+                />
+              }
               right={
                 <Button info onPress={() => alert('Trash')}>
                   <Icon

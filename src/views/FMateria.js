@@ -58,18 +58,18 @@ class FMateria extends Component {
         label: 'Miércoles',
         inicio: '12:00',
         fin: '13:00',
-        checked: true,
+        checked: false,
         edificio: '1',
         aula: '1201',
         dia: 3
       },
       {
         label: 'Jueves',
-        inicio: '',
-        fin: '',
-        checked: false,
-        edificio: '',
-        aula: '',
+        inicio: '12:00',
+        fin: '13:00',
+        checked: true,
+        edificio: '1',
+        aula: '1201',
         dia: 4
       },
       {
