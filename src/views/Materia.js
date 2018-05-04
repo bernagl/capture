@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FlatList, Switch, Platform } from 'react-native'
 import { connect } from 'react-redux'
-import { toggleTarea } from '../actions/tarea_actions'
+import { actualizarTarea } from '../actions/tarea_actions'
 import { TareaItem, View } from '../components'
 import {
   Segment,
@@ -34,7 +34,7 @@ class Materia extends Component {
   // renderRow({ item }, platform) {
   //   return (
   //     <ListItem>
-  //       <CheckBox checked={item.status} onPress={this.toggleTarea(item)} />
+  //       <CheckBox checked={item.status} onPress={this.actualizarTarea(item)} />
   //       <Body>
   //         <Text>{item.tarea}</Text>
   //       </Body>
@@ -45,6 +45,9 @@ class Materia extends Component {
   render() {
     const { platform, tab } = this.state
     const { materia, id } = this.props.navigation.state.params
+    const { navigate } = this.props.navigation
+    const {actualizarTarea, tareas} = this.props
+    const data = tareas.filter((tarea) => tarea.id_materia === id)
     return (
       <View noPadding>
         <Segment style={{ backgroundColor: 'white' }}>
@@ -65,11 +68,12 @@ class Materia extends Component {
         </Segment>
         {tab === 'tarea' ? (
           <FlatList
-            data={this.props.tareas}
+            data={data}
             renderItem={row => (
               <TareaItem
                 tarea={row.item}
-                toggleTarea={this.props.toggleTarea}
+                actualizarTarea={actualizarTarea}
+                navigate={navigate}
               />
             )}
           />
@@ -81,7 +85,7 @@ class Materia extends Component {
         <Fab
           style={{ backgroundColor: '#5067FF' }}
           onPress={() =>
-            this.props.navigation.navigate('AgregarTarea', { id, materia })
+            this.props.navigation.navigate('AgregarTarea', { tarea: { id_materia: id, materia } })
           }
           position="bottomRight"
         >
@@ -99,4 +103,4 @@ class Materia extends Component {
 
 const mapDisapatchToProps = ({ tareas }) => ({ tareas })
 
-export default connect(mapDisapatchToProps, { toggleTarea })(Materia)
+export default connect(mapDisapatchToProps, { actualizarTarea })(Materia)

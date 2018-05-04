@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   Platform
 } from 'react-native'
-import { Divider, View } from '../components'
+import { Divider, TareaItem,View } from '../components'
 import { Calendar } from 'react-native-calendars'
 import { ListItem, Text } from 'react-native-ui-lib'
-import { toggleTarea } from '../actions/tarea_actions'
+import { actualizarTarea } from '../actions/tarea_actions'
 // import RoundCheckbox from 'rn-round-checkbox'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -25,41 +25,10 @@ class Calendario extends Component {
     this.setState({ platform: Platform.OS })
   }
 
-  toggleTarea = tarea => {
-    this.props.toggleTarea(tarea)
-  }
-
-  renderItem = (item, platform) => {
-    return (
-      <ListItem>
-        <ListItem.Part>
-          {platform === 'ios' ? (
-            <TouchableOpacity onPress={() => this.toggleTarea(item)}>
-              {item.status ? (
-                <Icon name="ios-checkmark-circle-outline" size={25} />
-              ) : (
-                <Icon name="ios-radio-button-off-outline" size={25} />
-              )}
-            </TouchableOpacity>
-          ) : (
-            <CheckBox
-              value={item.status}
-              onValueChange={() => this.toggleTarea(item)}
-            />
-          )}
-        </ListItem.Part>
-        <ListItem.Part>
-          <Text dark20 style={styles.switch}>
-            {item.nombre}
-          </Text>
-        </ListItem.Part>
-      </ListItem>
-    )
-  }
-
   render() {
     const { tareas } = this.props
     const { platform, selectedDay } = this.state
+    const { navigate } = this.props.navigation
     const tareasDia = tareas.filter(tarea => tarea.fecha === selectedDay)
     return (
       <View>
@@ -76,7 +45,9 @@ class Calendario extends Component {
           {tareasDia.length > 0 ? (
             <FlatList
               data={tareasDia}
-              renderItem={({ item }) => this.renderItem(item, platform)}
+              renderItem={({ item }) => <TareaItem tarea={item}
+              navigate={navigate}
+              actualizarTarea={this.props.actualizarTarea} />}
             />
           ) : (
             <View center>
@@ -97,4 +68,4 @@ const styles = {
 
 const mapDispatchToProps = ({ tareas }) => ({ tareas })
 
-export default connect(mapDispatchToProps, { toggleTarea })(Calendario)
+export default connect(mapDispatchToProps, { actualizarTarea })(Calendario)

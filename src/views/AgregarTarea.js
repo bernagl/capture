@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { agregarTarea } from '../actions/tarea_actions'
+import { actualizarTarea, agregarTarea } from '../actions/tarea_actions'
 import { Text, Textarea, Button, Picker, Icon, Toast } from 'native-base'
 import DatePicker from 'react-native-datepicker'
 import View from '../components/View'
@@ -10,28 +10,25 @@ export class AgregarTarea extends Component {
     title: 'Agregar tarea'
   }
 
-  state = { tarea: '', fecha: '', status: false }
+  state = { tarea: '', fecha: '', status: false, id: null, materia: '' }
 
-  handleText = ({ key, value }) => {
+
+  componentDidMount(){
+    const { tarea } = this.props.navigation.state.params
+    // console.log(this.props.navigation.state.params)
+    tarea && this.setState({ ...tarea })
+  }
+
+  handleText = ( key, value ) => {
     this.setState({ [key]: value })
   }
 
   submit = async () => {
-    const { status, tarea } = this.state
-    const { id, materia } = this.props.navigation.state.params
-    const response = tarea
-      ? await this.props.agregarTarea({
-          tarea,
-          id_materia: id,
-          materia,
-          fecha,
-          status
-        })
-      : Toast.show({
-          text: 'Ingresa una tarea válida',
-          buttonText: 'Ok',
-          duration: 500
-        })
+    const { id } = this.state
+    // const { materia } = this.props.navigation.state.params
+    const objTarea = { ...this.state }
+    const response = await id ? this.props.actualizarTarea(objTarea):
+     this.props.agregarTarea(objTarea)
 
     response &&
       (Toast.show({
@@ -45,7 +42,7 @@ export class AgregarTarea extends Component {
   render() {
     const { id, materia } = this.props.navigation.state.params
     const { tarea, fecha } = this.state
-    console.log()
+    console.log(this.state)
     return (
       <View>
         <Textarea
@@ -56,13 +53,14 @@ export class AgregarTarea extends Component {
           onChangeText={tarea => this.handleText('tarea', tarea)}
         />
         <DatePicker
-        //   style={{ flex: 1, marginLeft: 5 }}
+          style={{ flex: 1, marginLeft: 5 }}
           date={fecha}
           mode="date"
           //   iconSource={Clock}
           placeholder="Fecha"
           confirmBtnText="Seleccionar"
           cancelBtnText="Cancel"
+          // format="DD-MM-YYYY"
         //   customStyles={{
         //     dateIcon: {
         //       position: 'absolute',
@@ -78,7 +76,7 @@ export class AgregarTarea extends Component {
             this.handleText('fecha', date)
           }}
         />
-        <Button block info onPress={this.submit} style={{ marginTop: 20 }}>
+        <Button block info disabled={!tarea && true} onPress={this.submit} style={{ marginTop: 20 }}>
           <Text>Guardar</Text>
         </Button>
       </View>
@@ -86,4 +84,4 @@ export class AgregarTarea extends Component {
   }
 }
 
-export default connect(null, { agregarTarea })(AgregarTarea)
+export default connect(null, { actualizarTarea, agregarTarea })(AgregarTarea)
